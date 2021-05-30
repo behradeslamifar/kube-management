@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    volume.beta.kubernetes.io/storage-provisioner: ceph.com/rbd
+    volume.kubernetes.io/storage-resizer: ceph.com/rbd
+  name: nginx-deployment-rbd-test
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: test-sc
+  volumeMode: Filesystem
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-test-rbd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: mirror.gcr.io/library/nginx:stable-alpine
+        command: ["sleep","99999"]
+        imagePullPolicy: IfNotPresent
+        name: web
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: nginx-rbd-test
+          mountPath: /var/www/html
+      volumes:
+        - name: nginx-rbd-test
+          persistentVolumeClaim:
+            claimName: nginx-deployment-rbd-test

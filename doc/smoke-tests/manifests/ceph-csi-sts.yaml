@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx-sts-test-rbd
+  namespace: default
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: nginx-rbd
+  serviceName: nginx-rbd
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx-rbd
+    spec:
+      containers:
+      - image: mirror.gcr.io/library/nginx:stable-alpine
+        imagePullPolicy: IfNotPresent
+        name: nginx-rbd
+        ports:
+        - containerPort: 80
+          name: web
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-rbd-test
+  volumeClaimTemplates:
+  - metadata:
+      name: nginx-rbd-test
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: test-sc
+      volumeMode: Filesystem
+
