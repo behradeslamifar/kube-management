@@ -6,7 +6,7 @@
 | Kubernetes    |   | [Kubernetes Dependencies - minimum version](https://github.com/kubernetes/kubernetes/blob/master/build/dependencies.yaml) |
 | Containerd    |   | [Kubernetes Dependencies](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#changed-11) |
 | Calico        |   | [System Requirements](https://docs.projectcalico.org/archive/v3.16/getting-started/kubernetes/requirements) |
-| CoreDNS       |   |  | [CoreDNS version in Kubernetes](https://github.com/coredns/deployment/blob/master/kubernetes/CoreDNS-k8s_version.md) |
+| CoreDNS       |   | [CoreDNS version in Kubernetes](https://github.com/coredns/deployment/blob/master/kubernetes/CoreDNS-k8s_version.md) |
 | kube-state-metric |  | [Compatibility matrix](https://github.com/kubernetes/kube-state-metrics#compatibility-matrix) |
 | Ingress       |        | [Changelog](https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md) |
 | ceph-csi      |        | [Support Matrix](https://github.com/ceph/ceph-csi#support-matrix) |
