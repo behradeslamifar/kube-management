@@ -1,0 +1,7 @@
+---
+# kubernetes.core documents: https://docs.ansible.com/ansible/latest/collections/kubernetes/core/index.html
+collections:
+- name: kubernetes.core
+  version: 2.2.1
+
+roles:

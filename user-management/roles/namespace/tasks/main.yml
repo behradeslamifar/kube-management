@@ -1,0 +1,50 @@
+---
+- name: Namespace | Create a k8s namespace
+  k8s:
+    name: {{ item.name }}
+    api_version: v1
+    kind: Namespace
+    state: present
+  with_items: "{{ namespaces }}"
+  
+- name: Namespace | Apply limitrange
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: LimitRange
+      metadata:
+        name: default
+        namespace: "{{ item.name }}"
+      spec:
+        limits:
+        - max:
+            cpu: "15"
+            memory: 15Gi
+            ephemeral-storage: 2Gi
+          default:
+            cpu: 200m
+            memory: 400Mi
+            ephemeral-storage: 70Mi
+          defaultRequest:
+            cpu: 100m
+            memory: 200Mi
+            ephemeral-storage: 20Mi
+          min:
+            cpu: 10m
+            memory: 50Mi
+            ephemeral-storage: 5Mi
+          type: Container
+  with_items: "{{ namespaces }}"
+
+- name: Namespace | Apply quota
+  k8s:
+    state: present
+    template: "quota.yml.j2"
+  with_items: "{{ namespaces }}"
+
+#- name: Namespace | Apply network policy
+#  k8s:
+#    state: present
+#    template: "network-policy.yml.j2"
+#  with_items: "{{ namespaces }}"

@@ -1,0 +1,14 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ item.0.username }}
+  namespace: {{ item.1 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {% if item.0.role == 'teamlead' %}admin{% elif item.0.role == 'developer' %}edit{% endif %}
+subjects:
+- kind: ServiceAccount
+  name: {{ item.0.username }}
+  namespace: users

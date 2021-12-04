@@ -1,0 +1,32 @@
+---
+- name: User | Create service account
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: {{ item.0.name }}
+        namespace: {{ item.1 }}
+  with_subelements:
+    - "{{ users }}"
+    - namespaces
+
+- name: User | Apply rolebinding
+  k8s:
+    state: present
+    template: "rolebinding.yml.j2"
+  with_subelements:
+    - "{{ users }}"
+    - namespaces
+  when: item.0.role == 'teamlead' or item.0.role == 'developer'
+
+- name: User | Apply clusterrolebindig
+  k8s:
+    state: present
+    template: "clusterrolebinding.yml.j2"
+  with_subelements:
+    - "{{ users }}"
+    - namespaces
+  when: item.0.role == 'cluster_view' or item.0.role == 'cluster_admin'
+
