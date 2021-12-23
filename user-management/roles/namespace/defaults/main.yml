@@ -1,6 +1,2 @@
 quota: "enabled"
-request_ephemeral_storage: "1Gi"
-limit_ephemeral_storage: "2Gi"
-loadbalancer_limit: "0"
-
 netowrk_policy: "disabled"

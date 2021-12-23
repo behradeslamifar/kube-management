@@ -5,18 +5,18 @@ metadata:
   namespace: {{ item.name }}
 spec:
   hard:
-    {% if 'request_cpu' in item.quota %}requests.cpu: "{{ item.quota['request_cpu'] }}"{% endif %}
-    {% if 'request_memory' in item.quota %}requests.memory: "{{ item.quota['request_memory'] }}"{% endif %}
-    {% if 'request_ephemeral_storage' in item.quota %}requests.ephemeral-storage: "{{ item.quota['request_ephemeral_storage'] }}"{% endif %}
-    {% if 'limit_cpu' in item.quota %}limits.cpu: "{{ item.quota['limit_cpu'] }}"{% endif %}
-    {% if 'limit_memory' in item.quota %}limits.memory: "{{ item.quota['limit_memory'] }}"{% endif %}
-    {% if 'limit_ephemeral_storage' in item.quota %}limits.ephemeral-storage: "{{ item.quota['limit_ephemeral_storage'] }}"{% endif %}
-    {% if 'configmaps_limit' in item.quota %}configmaps: "{{ item.quota['configmaps_limit'] }}"{% endif %}
-    {% if 'pvc_limit' in item.quota %}persistentvolumeclaims: "{{ item.quota['pvc_limit'] }}"{% endif %}
-    {% if 'pods_limit' in item.quota %}pods: "{{ item.quota['pods_limit'] }}"{% endif %}
-    {% if 'replicationcontroller_limit' in item.quota %}replicationcontrollers: "{{ item.quota['replicationcontroller_limit'] }}"{% endif %}
-    {% if 'resource_quota_limit' in item.quota %}resourcequotas: "{{ item.quota['resource_quota_limit'] }}"{% endif %}
-    {% if 'service_limit' in item.quota %}services: "{{ item.quota['service_limit'] }}"{% endif %}
-    {% if 'nodport_limit' in item.quota %}services.nodeports: "{{ item.quota['nodport_limit'] }}"{% endif %}
-    {% if 'loadbalancer_limit' in item.quota %}services.loadbalancers: "{{ item.quota['loadbalancer_limit'] }}"{% endif %}
-    {% if 'secret_limit' in item.quota %}secrets: "{{ item.quota['secret_limit'] }}"{% endif %}
+{% if 'request_cpu' in item.quota %}    requests.cpu: "{{ item.quota['request_cpu'] }}"{{"\n"}}{% endif %}
+{% if 'request_memory' in item.quota %}    requests.memory: "{{ item.quota['request_memory'] }}"{{"\n"}}{% endif %}
+{% if 'request_ephemeral_storage' in item.quota %}    requests.ephemeral-storage: "{{ item.quota['request_ephemeral_storage'] }}"{{"\n"}}{% endif %}
+{% if 'limit_cpu' in item.quota %}    limits.cpu: "{{ item.quota['limit_cpu'] }}"{{"\n"}}{% endif %}
+{% if 'limit_memory' in item.quota %}    limits.memory: "{{ item.quota['limit_memory'] }}"{{"\n"}}{% endif %}
+{% if 'limit_ephemeral_storage' in item.quota %}    limits.ephemeral-storage: "{{ item.quota['limit_ephemeral_storage'] }}"{{"\n"}}{% endif %}
+{% if 'configmaps_limit' in item.quota %}    configmaps: "{{ item.quota['configmaps_limit'] }}"{{"\n"}}{% endif %}
+{% if 'pvc_limit' in item.quota %}    persistentvolumeclaims: "{{ item.quota['pvc_limit'] }}"{{"\n"}}{% endif %}
+{% if 'pods_limit' in item.quota %}    pods: "{{ item.quota['pods_limit'] }}"{{"\n"}}{% endif %}
+{% if 'replicationcontroller_limit' in item.quota %}    replicationcontrollers: "{{ item.quota['replicationcontroller_limit'] }}"{{"\n"}}{% endif %}
+{% if 'resource_quota_limit' in item.quota %}    resourcequotas: "{{ item.quota['resource_quota_limit'] }}"{{"\n"}}{% endif %}
+{% if 'service_limit' in item.quota %}    services: "{{ item.quota['service_limit'] }}"{{"\n"}}{% endif %}
+{% if 'nodport_limit' in item.quota %}    services.nodeports: "{{ item.quota['nodport_limit'] }}"{{"\n"}}{% endif %}
+{% if 'loadbalancer_limit' in item.quota %}    services.loadbalancers: "{{ item.quota['loadbalancer_limit'] }}"{{"\n"}}{% endif %}
+{% if 'secret_limit' in item.quota %}    secrets: "{{ item.quota['secret_limit'] }}"{% endif %}

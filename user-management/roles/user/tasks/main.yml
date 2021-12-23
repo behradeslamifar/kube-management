@@ -6,27 +6,32 @@
       apiVersion: v1
       kind: ServiceAccount
       metadata:
-        name: {{ item.0.name }}
-        namespace: {{ item.1 }}
-  with_subelements:
+        name: "{{ item.name }}"
+        namespace: users
+    kubeconfig: "{{ k8s_config }}"
+    context: "{{ k8s_context }}"
+  with_items:
     - "{{ users }}"
-    - namespaces
-
-- name: User | Apply rolebinding
-  k8s:
-    state: present
-    template: "rolebinding.yml.j2"
-  with_subelements:
-    - "{{ users }}"
-    - namespaces
-  when: item.0.role == 'teamlead' or item.0.role == 'developer'
 
 - name: User | Apply clusterrolebindig
   k8s:
     state: present
-    template: "clusterrolebinding.yml.j2"
+    definition: "{{lookup('template', 'templates/clusterrolebinding.yml.j2') | from_yaml}}"
+    kubeconfig: "{{ k8s_config }}"
+    context: "{{ k8s_context }}"
+  with_items:
+    - "{{ users }}"
+  register: clusterrole
+  when: item.role == 'cluster_view' or item.role == 'cluster_admin'
+
+- name: User | Apply rolebinding
+  k8s:
+    state: present
+    definition: "{{lookup('template', 'templates/rolebinding.yml.j2') | from_yaml}}"
+    kubeconfig: "{{ k8s_config }}"
+    context: "{{ k8s_context }}"
   with_subelements:
     - "{{ users }}"
     - namespaces
-  when: item.0.role == 'cluster_view' or item.0.role == 'cluster_admin'
+  when: item.0.role != 'cluster_view' and item.0.role != 'cluster_admin'
 
